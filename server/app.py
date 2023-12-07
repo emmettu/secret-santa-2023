@@ -1,19 +1,10 @@
-from flask import Flask
-from flask import Flask, render_template
-from flask_socketio import SocketIO
+from fastapi import FastAPI, WebSocket
 
-from flask import Flask
-from flask_sock import Sock
-
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'your secret key'
-sock = Sock(app)
-
-@sock.route('/')
-def echo(ws):
-    print(ws.environ)
+app = FastAPI()
+@app.websocket("/")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
     while True:
-        data = ws.receive()
-        ws.send(data)
+        data = await websocket.receive_json(mode="binary")
+        await websocket.send_bytes(f"Message text was: {data}")
+
