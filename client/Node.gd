@@ -34,8 +34,9 @@ func _connected(proto = ""):
 	print("Connected with protocol: ", proto)
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
-	var msg = "{ client_id: %s }" % OS.get_unique_id()
-	_client.get_peer(1).put_packet(msg.to_utf8())
+	var msg = { "client_id": OS.get_unique_id() }
+	# var msg = "{ 'client_id': '%s', 'text': 'hello'}" % OS.get_unique_id()
+	_client.get_peer(1).put_packet(JSON.print(msg).to_utf8())
 
 func _on_data():
 	# Print the received packet, you MUST always use get_peer(1).get_packet
