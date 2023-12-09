@@ -1,10 +1,14 @@
 extends Node
 
 # The URL we will connect to
+# export var websocket_url = "wss://secret-santa-2023.onrender.com/"
+
 export var websocket_url = "ws://localhost:5000"
 
 # Our WebSocketClient instance
 var _client = WebSocketClient.new()
+
+onready var guess_text = get_node("%GuessText")
 
 func _ready():
 	# Connect base signals to get notified of connection open, close, and errors.
@@ -34,7 +38,7 @@ func _connected(proto = ""):
 	print("Connected with protocol: ", proto)
 	# You MUST always use get_peer(1).put_packet to send data to server,
 	# and not put_packet directly when not using the MultiplayerAPI.
-	var msg = { "client_id": OS.get_unique_id() }
+	var msg = { "client_id": OS.get_unique_id(), "room_id": 123 }
 	# var msg = "{ 'client_id': '%s', 'text': 'hello'}" % OS.get_unique_id()
 	_client.get_peer(1).put_packet(JSON.print(msg).to_utf8())
 
@@ -48,3 +52,8 @@ func _process(delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	_client.poll()
+
+
+func _on_Submit_pressed():
+	var msg = { "guess": guess_text.text, "client_id": OS.get_unique_id() }
+	_client.get_peer(1).put_packet(JSON.print(msg).to_utf8())
