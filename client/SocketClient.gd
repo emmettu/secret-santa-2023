@@ -1,9 +1,9 @@
 extends Node
 
 # The URL we will connect to
-# export var websocket_url = "wss://secret-santa-2023.onrender.com/"
+# export var websocket_url = "wss://secret-santa-2023.onrender.com/ws"
 
-export var websocket_url = "ws://localhost:5000"
+export var websocket_url = "ws://localhost:5000/ws"
 
 # Our WebSocketClient instance
 var _client = WebSocketClient.new()

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket
+from fastapi.staticfiles import StaticFiles
 
 class RoomManager():
 
@@ -18,14 +19,15 @@ class RoomManager():
     
     async def broadcast_room(self, client_id, message):
         room_id = self.client_rooms[client_id]
+        print(f"Sending message: {message} in room: {room_id}")
         for _, socket in self.rooms[room_id].items():
             await socket.send_bytes(message)
 
-app = FastAPI()
+app = FastAPI(title="app")
 
 room_manager = RoomManager()
 
-@app.websocket("/")
+@app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
@@ -36,4 +38,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 room_manager.join_room(client_id, room_id, websocket)
             case { "guess": guess, "client_id": client_id }:
                 await room_manager.broadcast_room(client_id, guess)
+
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
