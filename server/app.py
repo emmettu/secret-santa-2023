@@ -54,5 +54,5 @@ async def websocket_endpoint(websocket: WebSocket):
         room_manager.disconnect(websocket)
 
 
-app.mount("/", StaticFiles(directory="../react-app/build", html=True), name="static")
+app.mount("/", StaticFiles(directory="./static", html=True), name="static")
 
