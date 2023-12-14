@@ -11,29 +11,37 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
-margin_left = 449.0
-margin_top = 267.0
-margin_right = 575.0
-margin_bottom = 333.0
-
-[node name="Label" type="Label" parent="CenterContainer/GridContainer"]
-margin_right = 126.0
-margin_bottom = 14.0
-text = "Enter your message"
-
-[node name="GuessText" type="LineEdit" parent="CenterContainer/GridContainer"]
+[node name="GuessText" type="LineEdit" parent="CenterContainer"]
 unique_name_in_owner = true
-margin_top = 18.0
-margin_right = 126.0
-margin_bottom = 42.0
+margin_left = 483.0
+margin_top = 288.0
+margin_right = 541.0
+margin_bottom = 312.0
 caret_blink = true
 caret_blink_speed = 0.5
 
+[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
+margin_left = 431.0
+margin_top = 281.0
+margin_right = 592.0
+margin_bottom = 319.0
+columns = 2
+
+[node name="TextEdit" type="TextEdit" parent="CenterContainer/GridContainer"]
+margin_right = 31.0
+margin_bottom = 14.0
+text = "hello"
+
+[node name="Label" type="Label" parent="CenterContainer/GridContainer"]
+margin_left = 35.0
+margin_right = 161.0
+margin_bottom = 14.0
+text = "Enter your message"
+
 [node name="Submit" type="Button" parent="CenterContainer/GridContainer"]
-margin_top = 46.0
-margin_right = 126.0
-margin_bottom = 66.0
+margin_top = 18.0
+margin_right = 31.0
+margin_bottom = 38.0
 text = "OK"
 script = ExtResource( 2 )
 
