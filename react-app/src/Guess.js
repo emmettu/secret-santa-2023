@@ -4,7 +4,8 @@ import getBrowserFingerprint from 'get-browser-fingerprint';
 
 function Guess() {
 
-  const { sendMessage, lastMessage, readyState } = useWebSocket(`ws://${window.location.host}/ws`);
+  const { sendMessage, lastMessage, readyState } = useWebSocket(`wss://${window.location.host}/ws`);
+  // const { sendMessage, lastMessage, readyState } = useWebSocket(`ws://${window.location.host}/ws`);
   // const { sendMessage, lastMessage, readyState } = useWebSocket("ws://localhost:5000/ws");
 
   const [guess, setGuess] = useState("");
