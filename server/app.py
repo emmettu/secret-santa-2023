@@ -1,6 +1,10 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import BackgroundTasks, FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
 from room import Room
+from time import sleep
+import asyncio
 
 class RoomManager():
 
@@ -12,6 +16,10 @@ class RoomManager():
     def add_room(self, room_id):
         self.rooms[room_id] = Room()
 
+    
+    async def next_paragraph(self, room_id):
+        await self.rooms[room_id].next_paragraph()
+
     async def join_room(self, client_id, room_id, socket):
         print(f"client: {client_id} added to room: {room_id}")
         if room_id not in self.rooms:
@@ -20,10 +28,10 @@ class RoomManager():
         self.client_rooms[client_id] = room_id
         self.client_connections[socket] = client_id
     
-    async def broadcast_room(self, client_id, message):
+    async def receive_guess(self, client_id, message):
         room_id = self.client_rooms[client_id]
         print(f"Sending message: {message} in room: {room_id}")
-        await self.rooms[room_id].broadcast(message)
+        await self.rooms[room_id].receive_guess(client_id, message)
 
     def disconnect(self, socket):
         client_id = self.client_connections[socket]
@@ -39,8 +47,16 @@ app = FastAPI(title="app")
 
 room_manager = RoomManager()
 
+templates = Jinja2Templates(directory="./static")
+
+app.mount("/static", StaticFiles(directory="./static/static", html=True), name="static")
+
+async def next_paragraph(room_id):
+    sleep(5)
+    await room_manager.next_paragraph(room_id)
+
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, background_tasks: BackgroundTasks):
     await websocket.accept()
     try:
         while True:
@@ -48,11 +64,13 @@ async def websocket_endpoint(websocket: WebSocket):
             match data:
                 case { "clientId": client_id, "roomId": room_id }:
                     await room_manager.join_room(client_id, room_id, websocket)
+                    asyncio.create_task(next_paragraph(room_id))
                 case { "guess": guess, "clientId": client_id }:
-                    await room_manager.broadcast_room(client_id, guess)
+                    await room_manager.receive_guess(client_id, guess)
     except WebSocketDisconnect:
         room_manager.disconnect(websocket)
 
-
-app.mount("/", StaticFiles(directory="./static", html=True), name="static")
+@app.get("/{full_path:path}")
+async def react_app(req: Request, full_path: str):
+    return templates.TemplateResponse('index.html', { 'request': req })
 
