@@ -3,8 +3,8 @@ import useWebSocket from 'react-use-websocket';
 import getBrowserFingerprint from 'get-browser-fingerprint';
 
 function useGameClient() {
-  const { sendMessage, lastMessage, readyState } = useWebSocket(`wss://${window.location.host}/ws`);
-  //  const { sendMessage, lastMessage, readyState } = useWebSocket(`ws://${window.location.host}/ws`);
+  //  const { sendMessage, lastMessage, readyState } = useWebSocket(`ws://${window.location.host}/ws`, { shouldReconnect: (_event) => true } );
+  const { sendMessage, lastMessage, readyState } = useWebSocket(`wss://${window.location.host}/ws`, { shouldReconnect: (_event) => true } );
   // const { sendMessage, lastMessage, readyState } = useWebSocket("ws://localhost:5000/ws", { shouldReconnect: (_event) => true });
 
   const clientId = useRef(getBrowserFingerprint().toString());
@@ -13,6 +13,7 @@ function useGameClient() {
   const clientCallbacks = useRef([]);
   const countriesCallbacks = useRef([]);
   const resultsCallbacks = useRef([]);
+  const pageCallbacks = useRef([]);
 
   const [lastResults, setLastResults] = useState(null);
   const [lastAnswer, setLastAnswer] = useState(null);
@@ -37,6 +38,10 @@ function useGameClient() {
     resultsCallbacks.current.push(callback);
   }, []);
 
+  const registerPageCallback = useCallback((callback) => {
+    pageCallbacks.current.push(callback);
+  }, []);
+
   const getOtherResults = useCallback(() => {
     const otherResults = [];
     Object.keys(lastResults).map(k => {
@@ -54,6 +59,10 @@ function useGameClient() {
   const joinRoom = useCallback((name) => {
     const registration = { name: name, clientId: clientId.current, roomId: 123 };
     sendMessage(JSON.stringify(registration));
+  }, [sendMessage]);
+
+  const requestState = useCallback(() => {
+    sendMessage(JSON.stringify({ "update": clientId.current }));
   }, [sendMessage]);
 
   const submitGuess = useCallback((guess) => {
@@ -91,8 +100,13 @@ function useGameClient() {
       });
     }
 
+    if (message.page != null) {
+      pageCallbacks.current.forEach(cb => {
+        cb(message.page);
+      });
+    }
+
     if (message.results != null) {
-      console.log(JSON.stringify(message.results));
       setLastResults(message.results);
       resultsCallbacks.current.forEach(cb => {
         cb(message.results);
@@ -100,12 +114,13 @@ function useGameClient() {
     }
 
     if (message.answer != null) {
-      console.log("ANSEWR IS: " + message.answer);
       setLastAnswer(message.answer);
     }
+
   }, [lastMessage, setLastResults, setLastAnswer]);
 
   return {
+    requestState,
     submitGuess,
     joinRoom,
     registerCountriesCallback,
@@ -113,6 +128,7 @@ function useGameClient() {
     registerCorrectCallback,
     registerClientCallback,
     registerResultsCallback,
+    registerPageCallback,
     getOtherResults,
     getYourResult,
     lastAnswer,

@@ -1,6 +1,5 @@
 .App {
   text-align: left;
-  background-color: #f8f9fa;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,6 +18,17 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+label {
+  font-family: 'Linux Libertine','Georgia','Times','Source Serif Pro',serif;
+  font-weight: bold;
+  margin-right: 0.25em;
+}
+
+input {
+  margin-left: 0.25em;
+  height: 2em;
 }
 
 h1, h2, h3, h4 {

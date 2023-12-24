@@ -17,7 +17,7 @@ function Guess() {
   const [hints, setHints] = useState();
   const [countries, setCountries] = useState([]);
   
-  const { registerHintCallback, registerCountriesCallback, submitGuess, registerResultsCallback } = useContext(GameClientContext);
+  const { registerHintCallback, registerCountriesCallback, submitGuess, registerResultsCallback, requestState } = useContext(GameClientContext);
 
   const navigate = useNavigate();
 
@@ -39,6 +39,11 @@ function Guess() {
       navigate("/results");
     });
   }, [registerResultsCallback, navigate]);
+
+  useEffect(() => {
+    console.log("REQUESTING NEW STATE");
+    requestState();
+  }, [requestState]);
 
   // useEffect(() => {
   //   const fingerprint = getBrowserFingerprint().toString();
@@ -87,7 +92,7 @@ function Guess() {
       <form onSubmit={handleSubmit}>
         <label>
           <Select isSearchable={true} options={countries} onChange={choice => setGuess(choice.value)}></Select>
-          <input type="submit" value="Guess"/>
+          <input className="SubmitButton" type="submit" value="Guess"/>
         </label>
       </form>
       <Players />

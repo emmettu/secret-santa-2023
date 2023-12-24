@@ -1,9 +1,18 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 
 import { GameClientContext } from './GameClientContext';
 
 function RoundResults() {
-  const { getYourResult, getOtherResults, lastAnswer } = useContext(GameClientContext);
+  const { getYourResult, getOtherResults, lastAnswer, registerPageCallback } = useContext(GameClientContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    registerPageCallback((page) => {
+      navigate(`/${page}`);
+    });
+  }, [registerPageCallback, navigate]);
 
   const result = getYourResult();
   return (

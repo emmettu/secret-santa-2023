@@ -27,7 +27,7 @@ class RandomCountry:
         return self.countries.values()
 
     def from_id(self, id):
-        return self.countries[id]
+        return self.countries[id] if id in self.countries else None
 
     def distance(self, id1, id2):
         lat1, long1 = self.countries[id1].latlong

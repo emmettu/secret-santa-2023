@@ -12,18 +12,24 @@ function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate("/guess");
     joinRoom(name);
+    navigate("/guess");
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" onChange={(e) => setName(e.target.value)}/>
-      </label>
-      <input type="submit" value="Join"/>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" onChange={(e) => setName(e.target.value)}/>
+        </label>
+        <input type="submit" value="Join"/>
+      </form>
+      <h2>How to play</h2>
+      <p>1. Create a new room or join a game with an existing room number.</p>
+      <p>2. Read the Wikipedia exerpt for a random country.</p>
+      <p>3. Try to guess the country, the closer you are, the higher your score!</p>
+    </div>
   );
 }
 
