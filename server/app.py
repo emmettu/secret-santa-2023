@@ -79,5 +79,5 @@ async def websocket_endpoint(websocket: WebSocket, background_tasks: BackgroundT
     except WebSocketDisconnect:
         room_manager.disconnect(websocket)
 
-app.mount("/static", StaticFiles(directory="./static", html=True), name="static")
+app.mount("/", StaticFiles(directory="./static", html=True), name="static")
 
