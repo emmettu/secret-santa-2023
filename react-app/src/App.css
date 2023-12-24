@@ -1,5 +1,13 @@
 .App {
-  text-align: center;
+  text-align: left;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  font-size: calc(10px + 1vmin);
+  color: #202122;
 }
 
 .App-logo {
@@ -13,15 +21,21 @@
   }
 }
 
+h1, h2, h3, h4 {
+  font-family: 'Linux Libertine','Georgia','Times','Source Serif Pro',serif;
+  text-align: left;
+  border-bottom: 1px solid #a2a9b1;
+  min-width: 90vmin;
+}
+
+.Title {
+  font-size: calc(10px + 3vmin);
+}
+
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #202122;
 }
 
 .App-link {

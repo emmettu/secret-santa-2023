@@ -1,19 +1,26 @@
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
+import { GameClientContext } from './GameClientContext';
+
 function Home() {
-  const navigate = useNavigate("/guess");
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("Anonymous");
+
+  const { joinRoom } = useContext(GameClientContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("REGISTERING...");
     navigate("/guess");
+    joinRoom(name);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
         Name:
-        <input type="text"></input>
+        <input type="text" onChange={(e) => setName(e.target.value)}/>
       </label>
       <input type="submit" value="Join"/>
     </form>

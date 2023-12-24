@@ -16,15 +16,14 @@ class RoomManager():
     def add_room(self, room_id):
         self.rooms[room_id] = Room()
 
-    
     async def next_paragraph(self, room_id):
         await self.rooms[room_id].next_paragraph()
 
-    async def join_room(self, client_id, room_id, socket):
+    async def join_room(self, client_id, name, room_id, socket):
         print(f"client: {client_id} added to room: {room_id}")
         if room_id not in self.rooms:
             self.add_room(room_id)
-        await self.rooms[room_id].add_client(client_id, socket)
+        await self.rooms[room_id].add_client(client_id, name, socket)
         self.client_rooms[client_id] = room_id
         self.client_connections[socket] = client_id
     
@@ -34,6 +33,9 @@ class RoomManager():
         await self.rooms[room_id].receive_guess(client_id, message)
 
     def disconnect(self, socket):
+        if socket not in self.client_connections:
+            return
+
         client_id = self.client_connections[socket]
         room_id = self.client_rooms[client_id]
 
@@ -62,10 +64,10 @@ async def websocket_endpoint(websocket: WebSocket, background_tasks: BackgroundT
         while True:
             data = await websocket.receive_json()
             match data:
-                case { "clientId": client_id, "roomId": room_id }:
-                    await room_manager.join_room(client_id, room_id, websocket)
-                    asyncio.create_task(next_paragraph(room_id))
+                case { "clientId": client_id, "name": name, "roomId": room_id }:
+                    await room_manager.join_room(client_id, name, room_id, websocket)
                 case { "guess": guess, "clientId": client_id }:
+                    print("Received guess+ " + str(client_id))
                     await room_manager.receive_guess(client_id, guess)
     except WebSocketDisconnect:
         room_manager.disconnect(websocket)

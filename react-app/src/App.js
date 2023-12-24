@@ -1,45 +1,40 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, createMemoryRouter, RouterProvider } from "react-router-dom";
 
-import logo from './logo.svg';
 import './App.css';
 import Home from './Home';
 import Guess from './Guess';
+import useGameClient from './GameClient';
+import { GameClientContext } from './GameClientContext';
+import RoundResults from "./RoundResults";
 
 function App() {
+  const client = useGameClient();
 
-  const router = createBrowserRouter([
+  const router = createMemoryRouter([
     {
       path: "/",
       element: <Home />,
     },
     {
-      path: "/guess",
+      path: "guess",
       element: <Guess />,
+    },
+    {
+      path: "results",
+      element: <RoundResults />,
     },
   ]);
 
   return (
       <div className="App">
         <header className="App-header">
-          <RouterProvider router={router}>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <Guess/>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          </RouterProvider>
+          <h1>WikiCountryGuessr</h1>
         </header>
+        <body>
+          <GameClientContext.Provider value={client}>
+            <RouterProvider router={router}/>
+          </GameClientContext.Provider>
+        </body>
       </div>
   );
 }

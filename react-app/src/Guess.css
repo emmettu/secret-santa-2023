@@ -1,0 +1,8 @@
+.Guess {
+  max-width: 90vmin;
+}
+
+.Hint {
+  min-height: 50vh;
+  margin-bottom: 4em;
+}
