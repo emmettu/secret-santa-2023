@@ -31,6 +31,11 @@ class RoomManager():
         print(f"Sending message: {message} in room: {room_id}")
         await self.rooms[room_id].receive_guess(client_id, message)
 
+    async def chat(self, client_id, message):
+        room_id = self.client_rooms[client_id]
+        print(f"Sending message: {message} in room: {room_id}")
+        await self.rooms[room_id].chat(client_id, message)
+
     async def receive_guess(self, client_id, message):
         room_id = self.client_rooms[client_id]
         print(f"Sending message: {message} in room: {room_id}")
@@ -41,14 +46,14 @@ class RoomManager():
         print(f"Sending update")
         await self.rooms[room_id].send_state_update(client_id)
 
-    def disconnect(self, socket):
+    async def disconnect(self, socket):
         if socket not in self.client_connections:
             return
 
         client_id = self.client_connections[socket]
         room_id = self.client_rooms[client_id]
 
-        self.rooms[room_id].remove_client(client_id)
+        await self.rooms[room_id].remove_client(client_id)
         self.client_connections.pop(socket)
         self.client_rooms.pop(client_id)
 
@@ -74,10 +79,11 @@ async def websocket_endpoint(websocket: WebSocket, background_tasks: BackgroundT
                 case { "guess": guess, "clientId": client_id }:
                     await room_manager.receive_guess(client_id, guess)
                 case { "update": client_id }:
-                    print("GOT STATE REQUEST")
                     await room_manager.send_state_update(client_id)
+                case { "clientId": client_id, "message": message }:
+                    await room_manager.chat(client_id, message)
     except WebSocketDisconnect:
-        room_manager.disconnect(websocket)
+        await room_manager.disconnect(websocket)
 
 app.mount("/", StaticFiles(directory="./static", html=True), name="static")
 

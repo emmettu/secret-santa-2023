@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { GameClientContext } from './GameClientContext';
@@ -8,16 +8,21 @@ function Home() {
 
   const [name, setName] = useState("Anonymous");
 
-  const { joinRoom } = useContext(GameClientContext);
+  const { page, joinRoom } = useContext(GameClientContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     joinRoom(name);
-    navigate("/guess");
   }
 
+  useEffect(() => {
+    if (page !== "") {
+      navigate(`/${page}`);
+    }
+  }, [page, navigate]);
+
   return (
-    <div>
+    <div className="Home">
       <form onSubmit={handleSubmit}>
         <label>
           Name:

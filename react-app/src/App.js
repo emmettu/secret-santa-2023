@@ -1,4 +1,4 @@
-import { createBrowserRouter, createMemoryRouter, RouterProvider } from "react-router-dom";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 import './App.css';
 import Home from './Home';

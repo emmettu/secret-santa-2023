@@ -14,6 +14,28 @@
   pointer-events: none;
 }
 
+.Results {
+  max-width: 90vmin;
+}
+
+.Home {
+  max-width: 90vmin;
+}
+
+.Chat {
+  display: flex;
+}
+
+.ChatBox {
+  width: calc(90vmin - 10px);
+  margin-left: 0;
+  font-size: 1em;
+}
+
+.ToastProgress {
+  background: #202122 !important;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -29,6 +51,21 @@ label {
 input {
   margin-left: 0.25em;
   height: 2em;
+}
+
+.AnswerMarker {
+  filter: hue-rotate(180deg);
+}
+
+th, td {
+  padding: 0.25em;
+}
+
+table {
+  width: 90vmin;
+  align-items: center;
+  border-radius: 0.25em;
+  box-shadow: 0 0 0 1px #a2a9b1;
 }
 
 h1, h2, h3, h4 {
