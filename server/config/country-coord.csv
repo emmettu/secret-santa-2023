@@ -113,8 +113,8 @@ Jordan,JO,JOR,400,31.0,36.0
 Kazakhstan,KZ,KAZ,398,48.0,68.0
 Kenya,KE,KEN,404,1.0,38.0
 Kiribati,KI,KIR,296,1.4167,173.0
-Democratic People's Republic of Korea,KP,PRK,408,40.0,127.0
-Republic of Korea,KR,KOR,410,37.0,127.5
+North Korea,KP,PRK,408,40.0,127.0
+South Korea,KR,KOR,410,37.0,127.5
 Kuwait,KW,KWT,414,29.3375,47.6581
 Kyrgyzstan,KG,KGZ,417,41.0,75.0
 Lao People's Democratic Republic,LA,LAO,418,18.0,105.0
@@ -235,7 +235,7 @@ Uruguay,UY,URY,858,-33.0,-56.0
 Uzbekistan,UZ,UZB,860,41.0,64.0
 Vanuatu,VU,VUT,548,-16.0,167.0
 Venezuela,VE,VEN,862,8.0,-66.0
-Viet Nam,VN,VNM,704,16.0,106.0
+Vietnam,VN,VNM,704,16.0,106.0
 British Virgin Islands,VG,VGB,92,18.5,-64.5
 U.S Virgin Islands,VI,VIR,850,18.3333,-64.8333
 Wallis and Futuna,WF,WLF,876,-13.3,-176.2
