@@ -23,17 +23,17 @@ function Lobby() {
 
   return (
     <div className="Lobby">
-      <h2>"{room}" Lobby <span/>
+      <h2>"{room}" Lobby</h2>
+      
+      <h3>
         <TypeAnimation
-          sequence={["waiting for players...", 1000, "should start any day now...", 1000]}
+          sequence={["waiting for players...", 1000, "starting soon...", 1000]}
           preRenderFirstString={true}
           speed={40}
           cursor={true}
           repeat={Infinity}
         />
-      </h2>
-
-      <h3>Players</h3>
+      </h3>
       {standings.map(s => {
         return (
           <p>{s.name}</p>

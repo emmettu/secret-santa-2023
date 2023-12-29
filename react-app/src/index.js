@@ -8,7 +8,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <header className="App-header">
-      <h1>WikiCountryGuessr</h1>
+      <h1>
+        <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>WikiCountryGuessr</a>
+      </h1>
     </header>
     <App />
   </React.StrictMode>
