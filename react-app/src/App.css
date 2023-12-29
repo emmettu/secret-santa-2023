@@ -22,6 +22,31 @@
   max-width: 90vmin;
 }
 
+.NameLabel {
+  display: flex;
+  width: calc(90vmin - 15em);
+  margin-bottom: 0.5em;
+  align-items: center;
+}
+
+.RoomLabel {
+  display: flex;
+  width: calc(90vmin - 15em);
+  align-items: center;
+}
+
+input {
+  flex-grow: 1;
+}
+
+.Lobby {
+  max-width: 90vmin;
+}
+
+.Final {
+  max-width: 90vmin;
+}
+
 .Chat {
   display: flex;
 }
@@ -46,6 +71,10 @@ label {
   font-family: 'Linux Libertine','Georgia','Times','Source Serif Pro',serif;
   font-weight: bold;
   margin-right: 0.25em;
+}
+
+.Select {
+  font-size: 0.9em;
 }
 
 input {
@@ -77,12 +106,6 @@ h1, h2, h3, h4 {
 
 .Title {
   font-size: calc(10px + 3vmin);
-}
-
-.App-header {
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #202122;
 }
 
 .App-link {

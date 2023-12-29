@@ -14,6 +14,8 @@ function useGameClient() {
   const [lastAnswer, setLastAnswer] = useState(null);
   const [page, setPage] = useState("");
   const [standings, setStandings] = useState([]);
+  const [round, setRound] = useState(0);
+  const [room, setRoom] = useState("");
 
   const clientId = useRef(getBrowserFingerprint().toString());
 
@@ -37,8 +39,13 @@ function useGameClient() {
     return lastResults[clientId.current];
   }, [lastResults]);
 
-  const joinRoom = useCallback((name) => {
-    const registration = { name: name, clientId: clientId.current, roomId: 123 };
+  const joinRoom = useCallback((name, room) => {
+    const registration = { name: name, clientId: clientId.current, roomId: room };
+    sendMessage(JSON.stringify(registration));
+  }, [sendMessage]);
+
+  const startGame = useCallback(() => {
+    const registration = { clientId: clientId.current, start: "please" };
     sendMessage(JSON.stringify(registration));
   }, [sendMessage]);
 
@@ -90,17 +97,33 @@ function useGameClient() {
       setLastAnswer(message.answer);
     }
 
+    if (message.round != null) {
+      setRound(message.round);
+    }
+
+    if (message.room != null) {
+      setRoom(message.room);
+    }
+
   }, [lastMessage,
       setHint,
       setCountries,
+      setPage,
+      setStandings,
+      setLastChat,
       setLastResults,
-      setLastAnswer
+      setLastAnswer,
+      setRound,
+      setRoom,
+      startGame,
     ]);
 
   return {
     requestState,
     submitGuess,
     joinRoom,
+    room,
+    startGame,
     page,
     hint,
     countries,
@@ -112,6 +135,7 @@ function useGameClient() {
     chat,
     lastAnswer,
     lastResults,
+    round,
   }
 }
 

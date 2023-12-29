@@ -3,6 +3,8 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import Home from './Home';
 import Guess from './Guess';
+import Lobby from './Lobby';
+import Final from './Final';
 import useGameClient from './GameClient';
 import { GameClientContext } from './GameClientContext';
 import RoundResults from "./RoundResults";
@@ -16,6 +18,10 @@ function App() {
       element: <Home />,
     },
     {
+      path: "lobby",
+      element: <Lobby />,
+    },
+    {
       path: "guess",
       element: <Guess />,
     },
@@ -23,19 +29,18 @@ function App() {
       path: "results",
       element: <RoundResults />,
     },
+    {
+      path: "final",
+      element: <Final />,
+    },
   ]);
 
   return (
-      <div className="App">
-        <header className="App-header">
-          <h1>WikiCountryGuessr</h1>
-        </header>
-        <body>
-          <GameClientContext.Provider value={client}>
-            <RouterProvider router={router}/>
-          </GameClientContext.Provider>
-        </body>
-      </div>
+    <body className="App">
+      <GameClientContext.Provider value={client}>
+        <RouterProvider router={router}/>
+      </GameClientContext.Provider>
+    </body>
   );
 }
 

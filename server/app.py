@@ -13,7 +13,7 @@ class RoomManager():
         self.client_connections = {}
 
     def add_room(self, room_id):
-        self.rooms[room_id] = Room()
+        self.rooms[room_id] = Room(room_id)
 
     async def next_paragraph(self, room_id):
         await self.rooms[room_id].next_paragraph()
@@ -25,6 +25,10 @@ class RoomManager():
         await self.rooms[room_id].add_client(client_id, name, socket)
         self.client_rooms[client_id] = room_id
         self.client_connections[socket] = client_id
+
+    async def start_game(self, client_id):
+        room_id = self.client_rooms[client_id]
+        await self.rooms[room_id].start_game()
     
     async def receive_guess(self, client_id, message):
         room_id = self.client_rooms[client_id]
@@ -82,6 +86,8 @@ async def websocket_endpoint(websocket: WebSocket, background_tasks: BackgroundT
                     await room_manager.send_state_update(client_id)
                 case { "clientId": client_id, "message": message }:
                     await room_manager.chat(client_id, message)
+                case { "clientId": client_id, "start": _ }:
+                    await room_manager.start_game(client_id)
     except WebSocketDisconnect:
         await room_manager.disconnect(websocket)
 

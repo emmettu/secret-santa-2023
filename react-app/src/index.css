@@ -13,6 +13,13 @@ code {
     monospace;
 }
 
-:root {
-  --toastify-color-progress-light: #202122;
+.App-header {
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #202122;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  width: 100vmax;
 }

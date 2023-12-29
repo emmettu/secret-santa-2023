@@ -11,7 +11,7 @@ function Guess() {
 
   const [guess, setGuess] = useState("");
   
-  const { hint, submitGuess, countries, page } = useContext(GameClientContext);
+  const { hint, submitGuess, countries, page, round } = useContext(GameClientContext);
 
   const [countryOptions, setCountryOptions] = useState([]);
 
@@ -31,7 +31,7 @@ function Guess() {
   const typing = useCallback(() => {
         return (<TypeAnimation
           sequence={[hint]}
-          speed={60}
+          speed={85}
           cursor={true}
           style={{whiteSpace: 'pre-line'}}
         />)
@@ -44,13 +44,13 @@ function Guess() {
 
   return (
     <div className="Guess">
-      <h1>Round 1</h1>
+      <h1>Round {round} of 5</h1>
       <div className="Hint" style={{ textAlign: 'left'}}>
         {hint && typing()}
       </div>
       <form onSubmit={handleSubmit}>
         <label>
-          <Select isSearchable={true} options={countryOptions} onChange={choice => setGuess(choice.value)}></Select>
+          <Select className="Select" maxMenuHeight={190} isSearchable={true} options={countryOptions} onChange={choice => setGuess(choice.value)}></Select>
           <input className="SubmitButton" type="submit" value="Guess"/>
         </label>
       </form>

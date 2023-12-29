@@ -6,14 +6,16 @@
   height: 40vh;
   margin-bottom: 1em;
   overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .SubmitButton {
-  min-width: 90vmin;
+  width: 90vmin;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   margin-left: 0;
-  height: 3em;
+  height: 2em;
   font-family: 'Linux Libertine','Georgia','Times','Source Serif Pro',serif;
   font-size: 1em;
 }

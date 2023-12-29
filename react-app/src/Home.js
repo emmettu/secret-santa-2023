@@ -7,12 +7,13 @@ function Home() {
   const navigate = useNavigate();
 
   const [name, setName] = useState("Anonymous");
+  const [room, setRoom] = useState("Default");
 
   const { page, joinRoom } = useContext(GameClientContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    joinRoom(name);
+    joinRoom(name, room);
   }
 
   useEffect(() => {
@@ -24,11 +25,15 @@ function Home() {
   return (
     <div className="Home">
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="NameLabel">
           Name:
           <input type="text" onChange={(e) => setName(e.target.value)}/>
         </label>
-        <input type="submit" value="Join"/>
+        <label className="RoomLabel">
+          Room:
+          <input type="text" onChange={(e) => setRoom(e.target.value)}/>
+        </label>
+        <input className="SubmitButton" type="submit" value="Join or create room"/>
       </form>
       <h2>How to play</h2>
       <p>1. Create a new room or join a game with an existing room number.</p>
