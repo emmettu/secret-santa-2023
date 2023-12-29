@@ -1,6 +1,5 @@
 .App {
   text-align: left;
-  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,14 +23,14 @@
 
 .NameLabel {
   display: flex;
-  width: calc(90vmin - 15em);
+  width: calc(90vmin - 10em);
   margin-bottom: 0.5em;
   align-items: center;
 }
 
 .RoomLabel {
   display: flex;
-  width: calc(90vmin - 15em);
+  width: calc(90vmin - 10em);
   align-items: center;
 }
 

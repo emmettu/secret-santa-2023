@@ -36,9 +36,9 @@ function Home() {
         <input className="SubmitButton" type="submit" value="Join or create room"/>
       </form>
       <h2>How to play</h2>
-      <p>1. Create a new room or join a game with an existing room number.</p>
-      <p>2. Read the Wikipedia exerpt for a random country.</p>
-      <p>3. Try to guess the country, the closer you are, the higher your score!</p>
+      <p>1. Create a new room, or join a room with an existing name.</p>
+      <p>2. Read a Wikipedia exerpt for a random country.</p>
+      <p>3. Try to guess the country. The closer you are, the higher your score!</p>
     </div>
   );
 }
