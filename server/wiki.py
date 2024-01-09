@@ -59,6 +59,7 @@ class WikiScraper():
                 token = self.tokenize(word)
                 
                 if len(token) <= 1:
+                    clean_words.append(word)
                     continue
 
                 trp = (self.word_ranks[token] + 1) / len(self.word_ranks) if token in self.word_ranks else 1
